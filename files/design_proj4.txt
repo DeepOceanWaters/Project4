@@ -1,0 +1,75 @@
+For timing, use TDD => we want to be able to choose the number of threads and
+the max number.
+
+TDD:
+  Section 1: Small scale tests
+  Section 2: Timing the program
+
+Flow:
+  1. Initialize variables
+  2. Create X threads
+  3. Find primes
+    - When prime is found, set according bitmap to 1, and push it onto the stack
+    - One of the X threads gets the number => determines if it's happy of sad
+  4. For threads:
+    4.1 Wait for a number => pop the stack
+      4.1.1 If stack.size > 0 => pop the stack, break while loop, close mutex
+      4.1.2 If stack.size <= 0 && cur_num >= max_num => return
+    [4.2 Get each digit from the number
+      4.2.1 If total == 1 => return 1 (it's happy)
+      4.2.2 If that combination of digits has been found => return 0 (sad)
+      4.2.3 Mutex on cur_num
+      4.2.4 If popped_num > cur_num => set cur_num to popped_num
+    4.3 Square each digit and add
+    4.4 Go to 4.2] function()
+    4.5 Go to 4.1 until 
+  
+For threaded version => create mutex so that only one thread can pop the stack
+			each thread needs to check stack size => if < 0 wait
+( Possible code:	open mutex;
+			while( mutex.stack.size < 0){}; /* need better way */
+			pop stack;
+			close mutex;
+)
+
+For multiprocess && shared mem => create stack, need another way like mutex to
+				  make sure no race conditions. Same concept as
+				  threaded version.
+				 
+
+Things I need to know:
+	1. Creating threads.
+	  1.1 How do threads share memory exactly?
+	2. More information about Mutex  <----- !!!
+	  2.1 Can I have multiple Mutexes for different variables?
+	3. More information about shared mem with processes
+	4. Bitmaps. (They seem annoying).
+	
+Spike tests needed to run:
+	1. Timing:
+	    1.1 Write timings to a file.
+	    1.2 Use the correct format for a .dat file for MATLAB
+	    1.3 Use MATLAB and the created .dat file to create a graph
+	2. Threads:
+	    2.1 Create X threads
+	    2.2 Each thread prints "#X Hello, World!" where X is the threads num
+	3. Mutex:
+	    3.1 Create Mutex
+	    3.2 Create X threads
+	    3.3 Each thread:
+	    	3.3.1 Open Mutex
+		3.3.2 Print "Last thread: Y"
+		3.3.3 Print "#X Hello, World!"
+	    	3.3.4 Set Y to X
+		3.3.5 Close Mutex
+	4. Shared Memory:
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
