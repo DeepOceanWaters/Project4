@@ -96,7 +96,15 @@ void *dotprod(void *arg)
 	sub_sum = 0.0;
 	
 	for(int i = start; i < end; ++i)
-		sum += x[i] * y[i];
+		sub_sum += x[i] * y[i];
+	
+	// lock mutex
+	pthread_mutex_lock(&mutex_sum);
+	sum += sub_sum;			/* this is the critical section */
+	printf("Thread %d did %d to %d: sub_sum = %f, global sum = %f\n",
+		d->offset, start, end, sub_sum, sum);
+	pthread_mutex_unlock(&mutex_sum);
+	// unlocked mutex
 	
 	pthread_exit((void*) 0);
 	
