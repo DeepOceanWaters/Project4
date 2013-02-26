@@ -63,13 +63,24 @@ Spike tests needed to run:
 	    	3.3.4 Set Y to X
 		3.3.5 Close Mutex
 	4. Shared Memory:
+	    4.1 
+	5. Bitmap:
+	    5.1 Create bitmap size of X
+	    5.2 Loop through each bit
+	    5.3 Use Sieve's thing to find primes
+	    5.4 Print each found prime
+	(
+		unsigned char *bitmap;
+		int bitmap size = 340,000,000/8 + 1; <= # of bits
+							8 bits to a byte
+							1 byte per char
+		int object_size = 1024 * 1024 * 6; <= 6MB (megabytes) 6 million
+		bitmap = (char *) addr;
+	)
 	
 	
 	
-	
-	
-	
-	
+	19 / 8 + 1
 	
 	
 	
